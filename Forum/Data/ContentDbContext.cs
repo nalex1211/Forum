@@ -18,6 +18,10 @@ public class ContentDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Ignore<ApplicationUsers>();
+        modelBuilder.Entity<Discussions>()
+           .HasMany(d => d.Comments)
+           .WithOne(c => c.Discussions)
+           .OnDelete(DeleteBehavior.Cascade);
     }
 }
 
