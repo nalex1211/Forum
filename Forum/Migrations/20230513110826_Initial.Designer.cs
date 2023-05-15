@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Forum.Migrations.ContentDb
+namespace Forum.Migrations
 {
     [DbContext(typeof(ContentDbContext))]
-    [Migration("20230501173356_Initial")]
+    [Migration("20230513110826_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -36,7 +36,7 @@ namespace Forum.Migrations.ContentDb
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DiscussionId")
+                    b.Property<int?>("DiscussionsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -45,7 +45,7 @@ namespace Forum.Migrations.ContentDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiscussionId");
+                    b.HasIndex("DiscussionsId");
 
                     b.ToTable("Comments");
                 });
@@ -65,18 +65,11 @@ namespace Forum.Migrations.ContentDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LikeCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReportCount")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -86,13 +79,16 @@ namespace Forum.Migrations.ContentDb
 
             modelBuilder.Entity("Forum.Models.Comments", b =>
                 {
-                    b.HasOne("Forum.Models.Discussions", "Discussion")
-                        .WithMany()
-                        .HasForeignKey("DiscussionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Forum.Models.Discussions", "Discussions")
+                        .WithMany("Comments")
+                        .HasForeignKey("DiscussionsId");
 
-                    b.Navigation("Discussion");
+                    b.Navigation("Discussions");
+                });
+
+            modelBuilder.Entity("Forum.Models.Discussions", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Forum.Migrations.ContentDb
+namespace Forum.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -20,9 +20,7 @@ namespace Forum.Migrations.ContentDb
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LikeCount = table.Column<int>(type: "int", nullable: false),
-                    ReportCount = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -37,23 +35,22 @@ namespace Forum.Migrations.ContentDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DiscussionId = table.Column<int>(type: "int", nullable: false)
+                    DiscussionsId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_Discussions_DiscussionId",
-                        column: x => x.DiscussionId,
+                        name: "FK_Comments_Discussions_DiscussionsId",
+                        column: x => x.DiscussionsId,
                         principalTable: "Discussions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_DiscussionId",
+                name: "IX_Comments_DiscussionsId",
                 table: "Comments",
-                column: "DiscussionId");
+                column: "DiscussionsId");
         }
 
         /// <inheritdoc />

@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>All sadf</title>
+    <link rel="stylesheet" href="css/site.css" />
+
+</head>
+<body>
+    <h1 class="center">All discussions</h1>
+
+    <div id="discussions" class="container"></div>
+    <script src="js/Forum.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+        getDiscussions();
+    </script>
+
+    <h1>Discussion Details</h1>
+
+    <div>
+        <h2 id="discussionTitle"></h2>
+        <p id="discussionDescription"></p>
+        <p id="creationDate"></p>
+    </div>
+
+    <script>
+        getDiscussionById(1); 
+    </script>
+</body>
+</html>
+

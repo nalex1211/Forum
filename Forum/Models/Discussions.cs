@@ -1,4 +1,6 @@
-﻿namespace Forum.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Forum.Models;
 
 public class Discussions
 {
@@ -6,7 +8,11 @@ public class Discussions
     public string Title { get; set; }
     public string Description { get; set; }
     public DateTime CreationDate { get; set; } = DateTime.Now;
-    public string UserId { get; set; }
-    public int LikeCount { get; set; }
-    public int ReportCount { get; set; }
+
+    [ForeignKey("UserId")]
+    public string? UserId { get; set; }
+    public ApplicationUsers? User { get; set; }
+
+    public List<Comments>? Comments { get; set; }
 }
+
